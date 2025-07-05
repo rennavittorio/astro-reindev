@@ -1,10 +1,46 @@
 ---
 import Main from '../components/Main';
 import Layout from '../layouts/Layout.astro';
-import './src/styles/global.css' 
 import '@fontsource/manrope';
 ---
 
 <Layout>
 	<Main client:load />
 </Layout>
+
+<style is:global>
+	@import 'tailwindcss';
+
+	h1,
+	p {
+	font-family: 'Manrope', sans-serif;
+	}
+
+	.cube {
+	animation: rotating 4s linear infinite, tilting 1s ease-in-out infinite;
+	}
+
+	@keyframes rotating {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+	}
+
+	@keyframes tilting {
+	0% {
+		bottom: 0px;
+	}
+
+	50% {
+		bottom: 10px;
+	}
+
+	100% {
+		bottom: 0px;
+	}
+	}
+</style>
