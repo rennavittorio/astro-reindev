@@ -35,17 +35,6 @@ const Main = () => {
           I&apos;m Vittorio, a developer with a background in the neuroscience.
         </p>
         <p>
-          Currently working in{' '}
-          <a
-            href="https://www.gility.it/"
-            target="_blank"
-            className="underline hover:text-green-500"
-          >
-            Gility
-          </a>
-          .
-        </p>
-        <p>
           I mainly code in JS/TS and Ruby. I work with React, Next and Ruby on
           Rails
         </p>
