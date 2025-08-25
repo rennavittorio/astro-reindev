@@ -6,9 +6,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "type-check": "astro check"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^4.3.0",
     "@fontsource/manrope": "^5.2.6",
     "@lucide/astro": "^0.525.0",
@@ -19,6 +21,8 @@
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "tailwindcss": "^4.1.10"
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.10",
+    "typescript": "^5.9.2"
   }
 }
