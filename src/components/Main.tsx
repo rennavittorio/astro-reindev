@@ -1,6 +1,7 @@
-import { Github, Linkedin } from 'lucide-react'
+import { Github, Linkedin, FileDown } from 'lucide-react'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import Logger from './Logger'
 
 const Main = () => {
   const [darkMode, setDarkMode] = useState(false)
@@ -8,7 +9,7 @@ const Main = () => {
   return (
     <div
       className={twMerge(
-        'bg-gray-300 text-gray-800 min-h-dvh w-full flex justify-center items-center font-sans p-4 sm:p-0',
+        'bg-gray-300 text-gray-800 min-h-dvh w-full flex justify-center items-center font-sans px-4 py-8 sm:p-0',
         darkMode && 'bg-gray-800 text-gray-300'
       )}
     >
@@ -32,7 +33,8 @@ const Main = () => {
           </div>
         </div>
         <p>
-          I&apos;m Vittorio, a developer with a background in the neuroscience.
+          I&apos;m Vittorio, a fullstack web developer with a background in the
+          neuroscience.
         </p>
         <p>
           I mainly code in JS/TS and Ruby. I work with React, Next and Ruby on
@@ -62,7 +64,19 @@ const Main = () => {
           >
             <Github size={24} />
           </a>
+          <a
+            href="/rv-cv.pdf"
+            download
+            className={twMerge(
+              'p-4 border-1 border-gray-800 rounded-lg hover:bg-gray-800 hover:text-gray-300',
+              darkMode &&
+                'border-gray-300 hover:bg-gray-300 hover:text-gray-800'
+            )}
+          >
+            <FileDown size={24} />
+          </a>
         </div>
+        <Logger />
       </div>
     </div>
   )
