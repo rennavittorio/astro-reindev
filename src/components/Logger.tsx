@@ -5,7 +5,7 @@ const Logger = () => {
   useEffect(() => {
     const devFunctions = {
       help: () => {
-        console.log('Comandi disponibili:', `font-weight: bold;`)
+        console.log('Comandi disponibili: ')
         console.log('  - dev.help(): Lista dei comandi disponibili.')
         console.log('  - dev.contacts(): Se vuoi sapere dove contattarmi.')
         console.log(
@@ -23,30 +23,28 @@ const Logger = () => {
         )
         console.log('Oppure cercami su Discord come %c@reindev', color)
         console.log('Mi troverai sempre disponibile per due chiacchiere')
-        console.log('%c-------------------------')
+        console.log('-------------------------')
       },
       about: () => {
         console.log('-------------------------')
         console.log(`Che mi chiamo Vittorio già lo sai`)
-        console.log(
-          `Forse ti interessa sapere che sono originario di Domodossola`
-        )
-        console.log(`Ho vissuto a Padova da studente e poi a Milano per lavoro`)
+        console.log(`Sono cresciuto tra le montagne ossolane`)
+        console.log(`E mi sono formato come professionista tra Padova e Milano`)
         console.log('-------------------------')
       },
       profession: () => {
         console.log('-------------------------')
         console.log(
-          'Non sono stato sempre un developer, anche se ho sempre avuto la passione per il tech'
+          'Ho da sempre la passione per il tech, ma non sono stato sempre un dev'
         )
         console.log(
-          'Ho studiato neuroscienze (ossia lo psicologo che usa anche gli elettrodi e la statistica) a Padova'
+          'Ho studiato il comportamento delle persone attraverso le neuroscienze'
         )
         console.log(
-          'Dopo un periodo di ricerca, sono passato al mondo aziendale: prima come HR e poi come Consulente IT'
+          'Dopo un primo periodo di ricerca, sono passato al mondo aziendale: prima come HR e poi come Consulente IT'
         )
         console.log(
-          'È stato un percorso particolare, che mi ha lasciato molte competenze trasversali'
+          'È stato un percorso particolare che mi ha lasciato molte competenze trasversali'
         )
         console.log('-------------------------')
       },
