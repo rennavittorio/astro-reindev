@@ -2,6 +2,7 @@ import { Github, Linkedin, FileDown } from 'lucide-react'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Logger from './Logger'
+import SocialLink from './SocialLink'
 
 const Main = () => {
   const [darkMode, setDarkMode] = useState(false)
@@ -41,40 +42,24 @@ const Main = () => {
           Rails
         </p>
         <p>Beside programming, I love mountains and beers</p>
-        <div className="flex items-center justify-center gap-4">
-          <a
+        <div className="flex items-start justify-center gap-4">
+          <SocialLink
             href="https://www.linkedin.com/in/rennavittorio"
-            target="_blank"
-            className={twMerge(
-              'p-4 border-1 border-gray-800 rounded-lg hover:bg-gray-800 hover:text-gray-300',
-              darkMode &&
-                'border-gray-300 hover:bg-gray-300 hover:text-gray-800'
-            )}
+            darkMode={darkMode}
+            label="LinkedIn"
           >
             <Linkedin size={24} />
-          </a>
-          <a
+          </SocialLink>
+          <SocialLink
             href="https://github.com/rennavittorio"
-            target="_blank"
-            className={twMerge(
-              'p-4 border-1 border-gray-800 rounded-lg hover:bg-gray-800 hover:text-gray-300',
-              darkMode &&
-                'border-gray-300 hover:bg-gray-300 hover:text-gray-800'
-            )}
+            darkMode={darkMode}
+            label="GitHub"
           >
             <Github size={24} />
-          </a>
-          <a
-            href="/rv-cv.pdf"
-            download
-            className={twMerge(
-              'p-4 border-1 border-gray-800 rounded-lg hover:bg-gray-800 hover:text-gray-300',
-              darkMode &&
-                'border-gray-300 hover:bg-gray-300 hover:text-gray-800'
-            )}
-          >
+          </SocialLink>
+          <SocialLink href="/rv-cv.pdf" darkMode={darkMode} label="CV" download>
             <FileDown size={24} />
-          </a>
+          </SocialLink>
         </div>
         <Logger />
       </div>
