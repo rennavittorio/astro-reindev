@@ -1,0 +1,102 @@
+---
+// @ts-nocheck
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts')).sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+const allTags = [...new Set(posts.flatMap(post => post.data.tags).filter(Boolean))];
+---
+
+<Layout>
+	<div class="p-4">
+		<h1 class="text-xl font-semibold">My commits</h1>
+		
+		<div class="my-4">
+			<input type="text" id="search" placeholder="Search posts..." class="w-full max-w-[400px] p-1 px-4 border-1 border-gray-300 rounded-full">
+		</div>
+
+		<div class="flex flex-wrap gap-2 my-4">
+			{allTags.map(tag => (
+				<button class="tag-pill bg-gray-200 py-1 px-2 rounded-full hover:cursor-pointer text-xs" data-tag={tag}>
+					{tag}
+				</button>
+			))}
+		</div>
+
+		{posts.length > 0 ? (
+			<ul id="posts-list">
+				{posts.map(async post => {
+					const { Content } = await post.render();
+					return (
+						<li class="post-item mb-8" data-tags={post.data.tags.join(' ')} data-content={`${post.data.title} ${post.body}`}>
+							<h1 class="font-semibold">
+								{post.data.title}
+							</h1>
+							<div class="text-sm text-gray-500">
+								{new Date(post.data.date).toLocaleDateString()}
+							</div>
+							{post.data.tags && post.data.tags.length > 0 && (
+								<div class="flex flex-wrap gap-2 mt-2">
+									{post.data.tags.map(tag => (
+										<span class="flex items-center text-xs bg-gray-200 py-1 px-2 rounded-full">{tag}</span>
+									))}
+								</div>
+							)}
+							<div class="mt-2">
+								<Content />
+							</div>
+						</li>
+					);
+				})}
+			</ul>
+		) : (
+			<div>No posts yet...</div>
+		)}
+	</div>
+</Layout>
+
+<script>
+	// @ts-nocheck
+	const searchInput = document.getElementById('search');
+	const tagPills = document.querySelectorAll('.tag-pill');
+	const posts = document.querySelectorAll('.post-item');
+
+	let activeTags = new Set();
+
+	function filterPosts() {
+		const searchTerm = searchInput.value.toLowerCase();
+
+		posts.forEach(post => {
+			const postContent = post.dataset.content.toLowerCase();
+			const postTags = post.dataset.tags.split(' ');
+
+			const matchesSearch = postContent.includes(searchTerm);
+			const matchesTags = activeTags.size === 0 || postTags.some(tag => activeTags.has(tag));
+
+			if (matchesSearch && matchesTags) {
+				post.style.display = 'block';
+			} else {
+				post.style.display = 'none';
+			}
+		});
+	}
+
+	searchInput.addEventListener('input', filterPosts);
+
+	tagPills.forEach(pill => {
+		pill.addEventListener('click', () => {
+			const tag = pill.dataset.tag;
+			if (activeTags.has(tag)) {
+				activeTags.delete(tag);
+				pill.classList.remove('bg-blue-900!', 'text-white');
+			} else {
+				activeTags.add(tag);
+				pill.classList.add('bg-blue-900!', 'text-white');
+			}
+			filterPosts();
+		});
+	});
+</script>
+
+<style>
+</style>
