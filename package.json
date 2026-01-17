@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^4.3.0",
+    "@astrojs/ts-plugin": "^1.10.4",
     "@fontsource/manrope": "^5.2.6",
     "@lucide/astro": "^0.525.0",
     "@tailwindcss/vite": "^4.1.10",
