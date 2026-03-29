@@ -1,9 +1,8 @@
 ---
-// @ts-nocheck
 import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
-const posts = (await getCollection('posts')).sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+const posts = (await getCollection('posts')).sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 const allTags = [...new Set(posts.flatMap(post => post.data.tags).filter(Boolean))];
 ---
 
@@ -26,11 +25,13 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags).filter(Boolean
 		{posts.length > 0 ? (
 			<ul id="posts-list">
 				{posts.map(async post => {
-					const { Content } = await post.render();
+					const { Content } = await render(post);
 					return (
 						<li class="post-item mb-8" data-tags={post.data.tags.join(' ')} data-content={`${post.data.title} ${post.body}`}>
-							<h1 class="font-semibold">
-								{post.data.title}
+							<h1 class="font-semibold text-lg hover:text-blue-900">
+								<a href={`/blog/${post.id}`}>
+									{post.data.title}
+								</a>
 							</h1>
 							<div class="text-sm text-gray-500">
 								{new Date(post.data.date).toLocaleDateString()}

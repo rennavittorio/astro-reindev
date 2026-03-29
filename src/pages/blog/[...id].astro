@@ -1,0 +1,47 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('posts');
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout>
+  <div class="p-4 max-w-2xl mx-auto">
+    <a href="/blog" class="text-sm text-gray-500 hover:text-blue-900 mb-6 inline-block">&larr; Back to my commits</a>
+    
+    <article>
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold">{post.data.title}</h1>
+        <div class="text-gray-500 mt-2">
+          {new Date(post.data.date).toLocaleDateString()}
+        </div>
+        {post.data.tags && post.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mt-4">
+            {post.data.tags.map(tag => (
+              <span class="flex items-center text-xs bg-gray-200 py-1 px-2 rounded-full">{tag}</span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div class="markdown-content">
+        <Content />
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style is:global>
+</style>
