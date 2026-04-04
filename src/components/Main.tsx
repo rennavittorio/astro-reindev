@@ -41,7 +41,6 @@ const Main = () => {
           I mainly code in JS/TS and Ruby. I work with React, Next and Ruby on
           Rails
         </p>
-        <p>Beside programming, I love mountains and beers</p>
         <div className="flex items-start justify-center gap-4">
           <SocialLink
             href="https://www.linkedin.com/in/rennavittorio"
