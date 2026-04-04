@@ -26,7 +26,7 @@ const Navbar = ({ currentPath }: Props) => {
               active ? "text-white" : "text-white/25 hover:text-white/60"
             }`}
           >
-            {active ? `/${label}` : `/${label[0]}`}
+            {label}
           </a>
         );
       })}
