@@ -15,7 +15,7 @@ const Navbar = ({ currentPath }: Props) => {
     href === "/" ? currentPath === "/" : currentPath.startsWith(href);
 
   return (
-    <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 font-mono text-sm select-none flex items-center gap-5">
+    <nav className="fixed px-8 py-2 bg-dark top-5 left-1/2 -translate-x-1/2 z-50 font-mono text-sm select-none flex items-center gap-5">
       {links.map(({ label, href }) => {
         const active = isActive(href);
         return (

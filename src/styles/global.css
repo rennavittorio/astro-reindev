@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-dark: var(--dark);
+  --color-light: var(--light);
+}
+
+:root {
+  --dark: #111;
+  --light: #eee;
+}
