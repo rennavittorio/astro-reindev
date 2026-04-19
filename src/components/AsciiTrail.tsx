@@ -17,6 +17,7 @@ const AUTO_ANGLE_DRIFT = 0.12;
 
 const AsciiTrail = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const exclusionRects = useRef<DOMRect[]>([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -29,6 +30,12 @@ const AsciiTrail = () => {
     let rows = 0;
     let cells: Cell[][] = [];
 
+    const updateExclusions = () => {
+      exclusionRects.current = Array.from(
+        document.querySelectorAll("[data-no-trail]"),
+      ).map((el) => el.getBoundingClientRect());
+    };
+
     // Auto-wander state
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     let useAuto = isTouch;
@@ -37,9 +44,21 @@ const AsciiTrail = () => {
     let autoAngle = Math.random() * Math.PI * 2;
     let mouseIdleTimer: ReturnType<typeof setTimeout> | null = null;
 
+    const EXCLUSION_PADDING = 32;
+
+    const isExcluded = (px: number, py: number): boolean =>
+      exclusionRects.current.some(
+        (r) =>
+          px >= r.left - EXCLUSION_PADDING &&
+          px <= r.right + EXCLUSION_PADDING &&
+          py >= r.top - EXCLUSION_PADDING &&
+          py <= r.bottom + EXCLUSION_PADDING,
+      );
+
     const init = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      updateExclusions();
       cols = Math.ceil(canvas.width / CELL_SIZE) + 1;
       rows = Math.ceil(canvas.height / CELL_SIZE) + 1;
       cells = Array.from({ length: rows }, () =>
@@ -66,8 +85,11 @@ const AsciiTrail = () => {
           c++
         ) {
           if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
-          const dx = (c + 0.5) * CELL_SIZE - x;
-          const dy = (r + 0.5) * CELL_SIZE - y;
+          const cellX = (c + 0.5) * CELL_SIZE;
+          const cellY = (r + 0.5) * CELL_SIZE;
+          if (isExcluded(cellX, cellY)) continue;
+          const dx = cellX - x;
+          const dy = cellY - y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < RADIUS) {
             const factor = (1 - dist / RADIUS) ** 1.5;
@@ -120,7 +142,12 @@ const AsciiTrail = () => {
       activateCells(autoX, autoY);
     };
 
+    let frameCount = 0;
+
     const draw = () => {
+      // Re-query exclusion zones periodically to handle scroll position changes
+      if (frameCount++ % 30 === 0) updateExclusions();
+
       if (useAuto) stepAuto();
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -133,8 +160,12 @@ const AsciiTrail = () => {
         for (let c = 0; c < cols; c++) {
           const cell = cells[r][c];
           if (cell.opacity < 0.01) continue;
-          ctx.globalAlpha = cell.opacity;
-          ctx.fillText(cell.char, (c + 0.5) * CELL_SIZE, (r + 0.5) * CELL_SIZE);
+          const cellX = (c + 0.5) * CELL_SIZE;
+          const cellY = (r + 0.5) * CELL_SIZE;
+          if (!isExcluded(cellX, cellY)) {
+            ctx.globalAlpha = cell.opacity;
+            ctx.fillText(cell.char, cellX, cellY);
+          }
           cell.opacity = Math.max(0, cell.opacity - DECAY);
         }
       }
