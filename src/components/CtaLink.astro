@@ -1,0 +1,14 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  download?: boolean;
+}
+const { href, label, download = false } = Astro.props;
+---
+
+<a
+  href={href}
+  class="pointer-events-auto font-mono text-white/25 hover:text-white/60 transition-colors duration-150 bg-dark p-2"
+  {...download ? { download: true } : { target: "_blank", rel: "noopener noreferrer" }}
+>/{label}</a>

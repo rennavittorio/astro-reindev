@@ -1,0 +1,21 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CtaLink from "../../components/CtaLink.astro";
+---
+
+<Layout>
+  <main class="fixed inset-0 flex flex-col gap-6 items-center justify-center z-10 pointer-events-none select-none px-4 text-center text-sm">
+    <div class="flex flex-col sm:flex-row items-center">
+      <span class="px-2 sm:py-2 bg-dark">got a project?</span>
+      <CtaLink href="mailto:renna.vittorio@gmail.com" label="renna.vittorio@gmail.com" />
+    </div>
+    <div class="flex flex-col sm:flex-row items-center">
+      <span class="px-2 sm:py-2 bg-dark">let's connect?</span>
+      <CtaLink href="https://www.linkedin.com/in/rennavittorio" label="linkedin" />
+    </div>
+    <div class="flex flex-col sm:flex-row items-center">
+      <span class="px-2 sm:py-2 bg-dark">just wanna talk?</span>
+      <CtaLink href="https://discord.com/users/reindev" label="discord" />
+    </div>
+  </main>
+</Layout>
