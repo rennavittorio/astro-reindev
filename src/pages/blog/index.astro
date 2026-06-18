@@ -1,40 +1,25 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import BlogList from '../../components/blog/BlogList';
+import Layout from "../../layouts/Layout.astro";
+import BlogList from "../../components/blog/BlogList";
 
-const posts = (await getCollection('posts')).sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-);
+import { sanityClient } from "sanity:client";
+import type { SanityPost } from "@/types/types";
 
-// Strip basic markdown syntax for plain-text excerpts
-function extractExcerpt(body: string = '', maxLen = 180): string {
-  const stripped = body
-    .replace(/#{1,6}\s+/g, '')
-    .replace(/[*_`>\[\]]/g, '')
-    .replace(/\n+/g, ' ')
-    .trim();
-  return stripped.length > maxLen ? stripped.slice(0, maxLen).trimEnd() + '…' : stripped;
-}
+const POSTS_QUERY = `*[
+  _type == "post"
+  && defined(slug.current)
+]|order(publishedAt desc)[0...12]{_id, title, slug, publishedAt, tags, image, body}`;
 
-const allTags = [...new Set(posts.flatMap(p => p.data.tags).filter(Boolean))];
+const posts = await sanityClient.fetch<SanityPost[]>(POSTS_QUERY);
+const allTags = [...new Set(posts.flatMap((p) => p.tags).filter(Boolean))];
 
-const serializedPosts = posts.map(p => ({
-  id: p.id,
-  title: p.data.title,
-  date: p.data.date,
-  tags: p.data.tags,
-  excerpt: extractExcerpt(p.body),
-}));
 ---
 
 <Layout title="commits · vittorio renna">
   <main class="fixed inset-0 overflow-y-auto z-10 pt-20 pb-16 px-6">
-    <div class="max-w-xl mx-auto" data-no-trail>
-      <h1 class="text-[10px] tracking-[0.35em] uppercase text-white/20 mb-8 font-mono">
-        commits
-      </h1>
-      <BlogList client:load posts={serializedPosts} allTags={allTags} />
+    <div class="max-w-xl mx-auto" -no-trail>
+      <h1 class="text-[10px] tracking-[0.35em] uppercase text-white/20 mb-8 font-mono">commits</h1>
+      <BlogList client:load posts={posts} allTags={allTags} />
     </div>
   </main>
 </Layout>
