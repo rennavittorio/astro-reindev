@@ -11,6 +11,8 @@ import sanity from "@sanity/astro";
 // loadEnv reads .env files synchronously before Vite initializes
 const env = loadEnv(process.env.NODE_ENV ?? "development", process.cwd(), "");
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -21,12 +23,11 @@ export default defineConfig({
       useCdn: false, // for static builds
     }),
   ],
-
   image: {
     domains: ["cdn.sanity.io"],
   },
-
   vite: {
     plugins: [tailwindcss()],
   },
+  adapter: cloudflare(),
 });
