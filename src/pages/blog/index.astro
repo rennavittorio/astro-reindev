@@ -11,13 +11,12 @@ const POSTS_QUERY = `*[
 ]|order(publishedAt desc)[0...12]{_id, title, slug, publishedAt, tags, image, body}`;
 
 const posts = await sanityClient.fetch<SanityPost[]>(POSTS_QUERY);
-const allTags = [...new Set(posts.flatMap((p) => p.tags).filter(Boolean))];
-
+const allTags = [...new Set(posts.flatMap((p) => p.tags ?? []))];
 ---
 
 <Layout title="commits · vittorio renna">
   <main class="fixed inset-0 overflow-y-auto z-10 pt-20 pb-16 px-6">
-    <div class="max-w-xl mx-auto" -no-trail>
+    <div class="max-w-xl mx-auto" data-no-trail>
       <h1 class="text-[10px] tracking-[0.35em] uppercase text-white/20 mb-8 font-mono">commits</h1>
       <BlogList client:load posts={posts} allTags={allTags} />
     </div>
