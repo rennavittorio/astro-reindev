@@ -14,7 +14,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
     const term = searchTerm.toLowerCase();
     return posts.filter((post) => {
       const matchesSearch = !term || post.title.toLowerCase().includes(term);
-      const matchesTags = activeTags.size === 0 || post.tags.some((tag) => activeTags.has(tag));
+      const matchesTags = activeTags.size === 0 || post.tags?.some((tag) => activeTags.has(tag));
       return matchesSearch && matchesTags;
     });
   }, [searchTerm, activeTags, posts]);
@@ -69,7 +69,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
                   })}
                 </div>
                 <h2 className="text-white/70 group-hover:text-white/90 transition-colors text-sm font-mono mb-1">{post.title}</h2>
-                {post.tags.length > 0 && (
+                {post.tags && post.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mt-2">
                     {post.tags.map((tag) => (
                       <span key={tag} className="text-[10px] text-white/15 border border-white/8 px-1.5 py-px font-mono">

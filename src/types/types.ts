@@ -6,7 +6,7 @@ export interface SanityPost {
   title: string;
   slug: { _type: "slug"; current: string };
   publishedAt: string;
-  tags: string[];
-  image: SanityImageSource;
-  body: PortableTextBlock[];
+  tags?: string[];
+  image?: SanityImageSource;
+  body?: PortableTextBlock[];
 }
