@@ -49,7 +49,7 @@ const postImageUrl = post.image ? urlFor(post.image)?.width(550).height(310).url
           }
         </header>
 
-        {postImageUrl && <Image src={postImageUrl} alt={post.title} width={550} height={310} class="w-full mb-8 object-cover" />}
+        {post.image && postImageUrl && <Image src={postImageUrl} alt={post.image.alt} width={550} height={310} class="w-full mb-8 object-cover" />}
 
         <div class="prose-blog">
           {Array.isArray(post.body) && <PortableText value={post.body} />}
