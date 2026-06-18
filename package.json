@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "pnpm run build && wrangler dev",
     "astro": "astro",
-    "type-check": "astro check"
+    "type-check": "astro check",
+    "deploy": "pnpm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "12",
     "@astrojs/react": "^4.3.0",
     "@astrojs/ts-plugin": "^1.10.4",
     "@fontsource/manrope": "^5.2.6",
@@ -25,5 +28,8 @@
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.10",
     "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "wrangler": "^4.101.0"
   }
 }
