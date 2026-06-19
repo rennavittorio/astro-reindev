@@ -38,6 +38,7 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
+    "vite": "^8.0.0",
     "wrangler": "^4.101.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1"
