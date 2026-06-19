@@ -18,18 +18,28 @@
     "@astrojs/ts-plugin": "^1.10.4",
     "@fontsource/manrope": "^5.2.6",
     "@lucide/astro": "^0.525.0",
+    "@sanity/astro": "^3.4.1",
+    "@sanity/client": "^7.23.0",
+    "@sanity/image-url": "^2.1.1",
+    "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.1.10",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "astro": "^5.9.4",
+    "astro-portabletext": "^0.13.0",
     "lucide-react": "^0.525.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-is": "^19.2.7",
+    "sanity": "^6.1.0",
+    "styled-components": "^6.4.2",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.10",
     "typescript": "^5.9.2"
   },
   "devDependencies": {
-    "wrangler": "^4.101.0"
+    "wrangler": "^4.101.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-astro": "^0.14.1"
   }
 }
